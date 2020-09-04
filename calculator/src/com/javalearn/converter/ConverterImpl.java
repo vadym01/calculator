@@ -22,29 +22,18 @@ public class ConverterImpl implements Converter{
 
     @Override
     public void getRimNum(int num) {
-        HashMap<Integer, String> rimNum = new HashMap<>();
-        rimNum.put(1,"I");
-        rimNum.put(2,"II");
-        rimNum.put(3,"III");
-        rimNum.put(4,"IV");
-        rimNum.put(5,"V");
-        rimNum.put(6,"VI");
-        rimNum.put(7,"VII");
-        rimNum.put(8,"VIII");
-        rimNum.put(9,"IX");
-        rimNum.put(10,"X");
-        rimNum.put(11,"XI");
-        rimNum.put(12,"XII");
-        rimNum.put(13,"XIII");
-        rimNum.put(14,"XIV");
-        rimNum.put(15,"XV");
-        rimNum.put(16,"XI");
-        rimNum.put(17,"XII");
-        rimNum.put(18,"XIII");
-        rimNum.put(19,"XIX");
-        rimNum.put(20,"XX");
-        String res = rimNum.get(num);
-        System.out.println(res);
+        String[] rnChars = { "M",  "CM", "D", "C",  "XC", "L",  "X", "IX", "V", "I" };
+        int[] rnVals = {  1000, 900, 500, 100, 90, 50, 10, 9, 5, 1 };
+        String retVal = "";
+
+        for (int i = 0; i < rnVals.length; i++) {
+            int numberInPlace = num / rnVals[i];
+            if (numberInPlace == 0) continue;
+            retVal += numberInPlace == 4 && i > 0? rnChars[i] + rnChars[i - 1]:
+                    new String(new char[numberInPlace]).replace("\0",rnChars[i]);
+            num = num % rnVals[i];
+        }
+        System.out.println(retVal);
     }
 
     @Override
